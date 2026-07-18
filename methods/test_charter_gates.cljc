@@ -7,10 +7,9 @@
 
 (def ^:private here (.getParentFile (java.io.File. ^String *file*)))      ;; methods/
 (def ^:private actor-dir (.getParentFile here))                          ;; hagukumi/
-(def ^:private actor-name (.getName actor-dir))
-(def ^:private root (.. actor-dir getParentFile getParentFile))          ;; 20-actors → ROOT
-(def ^:private lexdir (java.io.File. root (str "00-contracts/lexicons/com/etzhayyim/" actor-name)))
-(defn- manifest [] (json/parse-string (slurp (java.io.File. actor-dir "manifest.jsonld"))))
+(def ^:private lexdir
+  (java.io.File. actor-dir "wire/lexicons/com/etzhayyim/hagukumi"))
+(defn- manifest [] (:actor/manifest (clojure.edn/read-string (slurp (java.io.File. actor-dir "manifest.edn")))))
 (defn- lex [name] (json/parse-string (slurp (java.io.File. lexdir (str name ".json")))))
 
 (def ^:private cells

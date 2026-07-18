@@ -3,15 +3,17 @@
 # Exits non-zero on any failure (deploy-gate friendly).
 set -uo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
-REPO_ROOT="$(cd "$ROOT/../.." && pwd)"
+CLASSPATH_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/hagukumi-classpath.XXXXXX")"
+trap 'rm -rf "$CLASSPATH_ROOT"' EXIT
+ln -s "$ROOT" "$CLASSPATH_ROOT/hagukumi"
 rc=0
 
-BB_CP="20-actors:20-actors/kotodama/src:50-infra/etzhayyim-moyai-credit/src:70-tools/src:70-tools"
+BB_CP="$CLASSPATH_ROOT"
 
 run_cljc() {
   local ns="$1"
   echo "==> hagukumi [cljc] $ns"
-  ( cd "$REPO_ROOT" && bb -cp "$BB_CP" -e \
+  ( cd "$ROOT" && bb -cp "$BB_CP" -e \
     "(require (quote clojure.test) (quote $ns))(let [r (clojure.test/run-tests (quote $ns))](System/exit (if (zero? (+ (:fail r) (:error r))) 0 1)))" ) || rc=1
 }
 

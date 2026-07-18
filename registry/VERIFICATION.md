@@ -2,7 +2,7 @@
 
 Per ADR-2605261030 (hagukumi — L4 Care Tier-B actor). Every
 `com.etzhayyim.hagukumi.careSupportProgram` record in
-`registry/programs.seed.json` ships `verificationStatus = unverified-seed`. This
+`wire/registry/programs.seed.json` ships `verificationStatus = unverified-seed`. This
 directory is a **routing scaffold** that points families to OFFICIAL public
 care-support programs (child + elder) worldwide; **no entry may be presented as
 authoritative, and no eligibility or benefit amount may be asserted, until it has

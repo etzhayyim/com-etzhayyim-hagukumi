@@ -1,0 +1,36 @@
+{:migration/id :hagukumi/flat-west-standalone
+ :migration/status :standalone-content-contained
+ :migration/source "etzhayyim/root:20-actors/hagukumi"
+ :migration/source-revision "86efa16a239445fb0955e2268291daeb2de9ee6a"
+ :migration/canonical-repository "https://github.com/etzhayyim/com-etzhayyim-hagukumi"
+ :migration/canonical-path "orgs/etzhayyim/com-etzhayyim-hagukumi"
+ :migration/content
+ {:root-files 32
+  :canonical-metadata "manifest.edn"
+  :retired-metadata "manifest.jsonld"
+  :root-only-integrated
+  ["cells/social_post/state_machine.cljc"
+   "methods/social.cljc"]
+  :deprecated-pruned ["py/"]}
+ :migration/canonicalization
+ {:metadata :edn
+  :data :edn
+  :external-wire-root "wire/"
+  :wire-formats #{:json}
+  :deprecated-languages #{:go :tinygo}
+  :deprecated-language-action :prune-not-port}
+ :migration/verification
+ {:command "./run_tests.sh"
+  :tests 34 :assertions 55 :failures 0 :errors 0}
+ :migration/root-action
+ {:actor-directory :replace-with-moved-edn
+  :repoint ["70-tools/src/etzhayyim/lint/shell-baseline.edn"]
+  :retain-central
+  ["00-contracts/lexicons/com/etzhayyim/hagukumi"
+   "90-docs/adr/2605261030-hagukumi-care-tier-b-actor-r0.edn"
+   "50-infra/etzhayyim-did-web/src/registry"]}
+ :migration/known-gaps
+ [:registry-programs-remain-unverified-seed
+  :root-tombstone-not-yet-committed
+  :shell-baseline-not-yet-repointed
+  :west-revision-not-yet-repinned]}
